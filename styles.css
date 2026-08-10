@@ -1,0 +1,483 @@
+:root {
+  --font-display: "MonteCarlo", cursive;
+  --font-parcel: "Lora", Georgia, serif;
+  --strawberry: #c94a4a;
+  --cherry: #762e35;
+  --dusty-pink: #e99a9a;
+  --blush: #f5c4bd;
+  --cream: #fff8e8;
+  --ink: #472f2b;
+  --green: #71866a;
+  --sky: #a9ddff;
+  --violet: #8177dd;
+  --focus: #2858a8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-parcel);
+  background:
+    linear-gradient(rgb(255 248 232 / 18%), rgb(255 248 232 / 18%)),
+    url("mood references/strawberry-gingham.png") center / 720px auto repeat;
+}
+
+button {
+  font: inherit;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(22rem, 0.9fr) minmax(36rem, 1.1fr);
+  gap: 1.5rem;
+  width: min(1180px, calc(100vw - 3rem));
+  min-height: calc(100vh - 3rem);
+  margin: 1.5rem auto;
+}
+
+.hero-panel,
+.workspace {
+  background: rgb(255 248 232 / 96%);
+  border: 1px solid rgb(118 46 53 / 18%);
+  border-radius: 8px;
+  box-shadow: 0 18px 50px rgb(93 39 40 / 18%);
+}
+
+.hero-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.wordmark-image {
+  width: 9.5rem;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
+.parcel-meta {
+  margin: 0;
+  font-family: var(--font-parcel);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mail-stage {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+  min-height: 38rem;
+}
+
+.sky-window {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 26rem;
+  overflow: hidden;
+  border: 1px solid rgb(118 46 53 / 16%);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 70% 25%, rgb(255 255 255 / 80%) 0 9%, transparent 10%),
+    linear-gradient(180deg, #9bd8ff 0%, #d9c7ff 58%, #cbe8a5 100%);
+}
+
+.dream-grid {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 11rem;
+  height: 8rem;
+  border: 1px solid rgb(255 255 255 / 60%);
+  transform: perspective(14rem) rotateX(42deg) rotateZ(8deg);
+  background-image:
+    linear-gradient(rgb(255 255 255 / 48%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 48%) 1px, transparent 1px);
+  background-size: 1rem 1rem;
+}
+
+.cloud {
+  position: absolute;
+  width: 11rem;
+  height: 4rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 70%);
+  filter: blur(2px);
+}
+
+.cloud-one {
+  top: 5rem;
+  left: -3rem;
+}
+
+.cloud-two {
+  right: -2rem;
+  bottom: 6rem;
+}
+
+.glass-mailbox {
+  position: relative;
+  width: 11rem;
+  height: 18rem;
+  border: 2px solid rgb(255 255 255 / 75%);
+  border-radius: 8px 8px 3px 3px;
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 42%), transparent 18% 78%, rgb(255 255 255 / 45%)),
+    rgb(143 226 255 / 25%);
+  box-shadow:
+    0 1rem 3rem rgb(32 95 128 / 22%),
+    inset 0 0 2rem rgb(255 255 255 / 45%);
+}
+
+.mailbox-flag {
+  position: absolute;
+  top: 2rem;
+  right: -1.5rem;
+  width: 2.2rem;
+  height: 5rem;
+  border-radius: 999px;
+  background: var(--strawberry);
+  transform: rotate(-14deg);
+}
+
+.mailbox-screen {
+  position: absolute;
+  top: 6.2rem;
+  left: 2rem;
+  display: grid;
+  place-items: center;
+  width: 7rem;
+  height: 3.5rem;
+  color: white;
+  font-size: 0.75rem;
+  background: linear-gradient(180deg, var(--violet), #3f76db);
+  border: 3px solid rgb(255 255 255 / 60%);
+}
+
+.mailbox-slot {
+  position: absolute;
+  right: 2.2rem;
+  bottom: 4rem;
+  left: 2.2rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: rgb(71 47 43 / 70%);
+}
+
+.stage-copy {
+  text-align: center;
+}
+
+.brand-wordmark {
+  margin: 0;
+  color: var(--cherry);
+  font-family: var(--font-display);
+  font-size: clamp(4.25rem, 9vw, 6rem);
+  font-weight: 400;
+  line-height: 0.9;
+}
+
+.parcel-status {
+  margin: 0;
+  font-family: var(--font-parcel);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.workspace {
+  display: flex;
+  flex-direction: column;
+  min-height: 38rem;
+  padding: 1rem;
+}
+
+.flow-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.tab,
+.secondary-button,
+.wrap-choice {
+  min-height: 2.75rem;
+  color: var(--cherry);
+  border: 1px solid rgb(118 46 53 / 22%);
+  border-radius: 6px;
+  background: rgb(255 248 232 / 82%);
+  cursor: pointer;
+}
+
+.tab.is-active,
+.wrap-choice.is-selected {
+  color: white;
+  background: var(--cherry);
+}
+
+.screen {
+  display: none;
+  flex: 1;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgb(255 255 255 / 44%), rgb(245 196 189 / 28%));
+}
+
+.screen.is-active {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.panel-heading {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.parcel-title {
+  margin: 0;
+  font-family: var(--font-parcel);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.parcel-body,
+.parcel-card p,
+.address-label p {
+  margin: 0;
+  font-family: var(--font-parcel);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.parcel-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.parcel-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid rgb(118 46 53 / 18%);
+  border-radius: 8px;
+  background: rgb(255 248 232 / 92%);
+}
+
+.parcel-card h3 {
+  margin: 0.15rem 0;
+  font-size: 1.1rem;
+}
+
+.parcel-card.muted {
+  opacity: 0.82;
+}
+
+.fruit-sticker {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: white;
+  font-weight: 600;
+  border-radius: 999px;
+  background: var(--strawberry);
+}
+
+.fruit-sticker.green {
+  background: var(--green);
+}
+
+.primary-button,
+.script-button {
+  min-height: 3rem;
+  padding: 0.55rem 1.6rem 0.7rem;
+  color: var(--cherry);
+  border: 1px solid rgb(118 46 53 / 22%);
+  border-radius: 999px;
+  background: var(--blush);
+  cursor: pointer;
+}
+
+.script-cta,
+.script-button {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.wave-label {
+  display: flex;
+  align-items: end;
+  gap: 0.55rem;
+  width: min(26rem, 100%);
+  height: 7rem;
+  padding: 1rem;
+  border: 1px dashed rgb(118 46 53 / 34%);
+  border-radius: 8px;
+  background: rgb(255 248 232 / 74%);
+}
+
+.wave-label span {
+  width: 100%;
+  border-radius: 999px;
+  background: var(--strawberry);
+}
+
+.wave-label span:nth-child(1) { height: 35%; }
+.wave-label span:nth-child(2) { height: 72%; }
+.wave-label span:nth-child(3) { height: 48%; }
+.wave-label span:nth-child(4) { height: 86%; }
+.wave-label span:nth-child(5) { height: 42%; }
+
+.parcel-preview,
+.open-parcel {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(24rem, 100%);
+  min-height: 15rem;
+  border: 1px solid rgb(118 46 53 / 20%);
+  border-radius: 8px;
+  background: url("mood references/strawberry-gingham.png") center / 360px auto;
+  box-shadow: inset 0 0 0 999px rgb(255 248 232 / 18%);
+}
+
+.parcel-preview.brown {
+  background: #caa46f;
+}
+
+.parcel-preview.midnight {
+  color: white;
+  background: linear-gradient(135deg, #24214d, #7464b8);
+}
+
+.parcel-preview.strawberry {
+  background:
+    radial-gradient(circle, #c94a4a 0 0.28rem, transparent 0.3rem) 0 0 / 2rem 2rem,
+    #f5c4bd;
+}
+
+.parcel-tape {
+  position: absolute;
+  width: 4rem;
+  height: 100%;
+  background: rgb(255 248 232 / 62%);
+}
+
+.parcel-label,
+.pull-tab {
+  z-index: 1;
+  padding: 0.55rem 0.8rem;
+  color: var(--cherry);
+  background: rgb(255 248 232 / 92%);
+  border: 1px solid rgb(118 46 53 / 18%);
+  border-radius: 4px;
+}
+
+.wrap-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.address-label {
+  width: min(28rem, 100%);
+  padding: 1.25rem;
+  border: 1px solid rgb(118 46 53 / 20%);
+  border-radius: 8px;
+  background: rgb(255 248 232 / 88%);
+}
+
+.open-parcel {
+  cursor: pointer;
+}
+
+.open-parcel.is-open .pull-tab {
+  transform: translateY(-2.25rem);
+}
+
+.hidden-wave {
+  position: absolute;
+  bottom: 3rem;
+  width: 70%;
+  height: 2.5rem;
+  opacity: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--strawberry) 0 0.25rem,
+    transparent 0.25rem 0.65rem
+  );
+  clip-path: polygon(0 48%, 8% 24%, 16% 64%, 24% 30%, 32% 76%, 40% 42%, 50% 64%, 60% 28%, 72% 70%, 84% 36%, 100% 58%, 100% 100%, 0 100%);
+}
+
+.open-parcel.is-open .hidden-wave {
+  opacity: 1;
+}
+
+@media (max-width: 860px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    width: min(100vw - 1rem, 42rem);
+    margin: 0.5rem auto;
+  }
+
+  .mail-stage {
+    min-height: auto;
+  }
+
+  .sky-window {
+    min-height: 20rem;
+  }
+
+  .flow-tabs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .parcel-card {
+    grid-template-columns: auto 1fr;
+  }
+
+  .parcel-card button {
+    grid-column: 1 / -1;
+  }
+
+  .wrap-options {
+    grid-template-columns: 1fr;
+  }
+}

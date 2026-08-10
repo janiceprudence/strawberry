@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Postie - Strawberry Mail</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=MonteCarlo&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero-panel" aria-labelledby="app-title">
+        <div class="brand-row">
+          <img
+            class="wordmark-image"
+            src="assets/postie-wordmark.png"
+            alt="Postie"
+          />
+          <p class="parcel-meta">Strawberry Mail</p>
+        </div>
+
+        <div class="mail-stage" aria-live="polite">
+          <div class="sky-window">
+            <div class="dream-grid"></div>
+            <div class="cloud cloud-one"></div>
+            <div class="cloud cloud-two"></div>
+            <div class="glass-mailbox" id="mailbox">
+              <span class="mailbox-flag" aria-hidden="true"></span>
+              <span class="mailbox-screen">New parcel</span>
+              <span class="mailbox-slot"></span>
+            </div>
+          </div>
+          <div class="stage-copy">
+            <h1 id="app-title" class="brand-wordmark">Postie</h1>
+            <p class="parcel-status" id="stage-status">
+              There is something soft waiting in your mailbox.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="Postie app">
+        <nav class="flow-tabs" aria-label="Postie flow">
+          <button class="tab is-active" type="button" data-screen="mailbox">
+            Mailbox
+          </button>
+          <button class="tab" type="button" data-screen="record">Record</button>
+          <button class="tab" type="button" data-screen="wrap">Wrap</button>
+          <button class="tab" type="button" data-screen="send">Send</button>
+          <button class="tab" type="button" data-screen="open">Open</button>
+        </nav>
+
+        <div class="screen is-active" id="screen-mailbox">
+          <div class="panel-heading">
+            <p class="parcel-meta">Good morning, June</p>
+            <h2 class="parcel-title">There is a berry important delivery.</h2>
+          </div>
+          <div class="parcel-list">
+            <article class="parcel-card">
+              <span class="fruit-sticker">S</span>
+              <div>
+                <p class="parcel-meta">Posted 8:42 AM</p>
+                <h3>Something from Sam</h3>
+                <p>Contents: one sleepy hello</p>
+              </div>
+              <button class="script-button" type="button" data-screen="open">
+                Open parcel
+              </button>
+            </article>
+            <article class="parcel-card muted">
+              <span class="fruit-sticker green">A</span>
+              <div>
+                <p class="parcel-meta">Keepsake Drawer</p>
+                <h3>Saved for later</h3>
+                <p>Opened again yesterday with a tiny postmark.</p>
+              </div>
+              <button class="secondary-button" type="button">Keep safe</button>
+            </article>
+          </div>
+          <button class="primary-button script-cta" type="button" data-screen="record">
+            Pack a voice note
+          </button>
+        </div>
+
+        <div class="screen" id="screen-record">
+          <div class="panel-heading">
+            <p class="parcel-meta">Recording room</p>
+            <h2 class="parcel-title">What would you like to send?</h2>
+            <p class="parcel-body">Hold the ribbon and say the small true thing.</p>
+          </div>
+          <div class="wave-label" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <p class="parcel-status" id="record-status">I am listening. Take your time.</p>
+          <div class="button-row">
+            <button class="primary-button script-cta" type="button" id="record-button">
+              Hold to record
+            </button>
+            <button class="secondary-button" type="button" data-screen="wrap">
+              That's the one
+            </button>
+            <button class="secondary-button" type="button">Try again</button>
+          </div>
+        </div>
+
+        <div class="screen" id="screen-wrap">
+          <div class="panel-heading">
+            <p class="parcel-meta">Wrapping table</p>
+            <h2 class="parcel-title">Wrap your message</h2>
+          </div>
+          <div class="parcel-preview" id="parcel-preview">
+            <span class="parcel-tape"></span>
+            <span class="parcel-label">Open when you miss me</span>
+          </div>
+          <div class="wrap-options" role="group" aria-label="Wrapping paper">
+            <button class="wrap-choice is-selected" type="button" data-wrap="gingham">
+              Gingham paper
+            </button>
+            <button class="wrap-choice" type="button" data-wrap="strawberry">
+              Strawberry paper
+            </button>
+            <button class="wrap-choice" type="button" data-wrap="brown">
+              Brown paper and string
+            </button>
+            <button class="wrap-choice" type="button" data-wrap="midnight">
+              Secret midnight wrapping
+            </button>
+          </div>
+          <button class="primary-button script-cta" type="button" data-screen="send">
+            Seal the parcel
+          </button>
+        </div>
+
+        <div class="screen" id="screen-send">
+          <div class="address-label">
+            <p class="parcel-meta">Deliver to</p>
+            <h2 class="parcel-title">Alex</h2>
+            <p>From June. Contents classified, probably sweet.</p>
+          </div>
+          <button class="primary-button script-cta" type="button" id="send-button">
+            Pop it in the post
+          </button>
+          <p class="parcel-status" id="send-status">
+            Waiting by the little red flag.
+          </p>
+        </div>
+
+        <div class="screen" id="screen-open">
+          <div class="panel-heading">
+            <p class="parcel-meta">Packed 12 minutes ago</p>
+            <h2 class="parcel-title">Special delivery from June</h2>
+          </div>
+          <button class="open-parcel" type="button" id="open-parcel">
+            <span class="pull-tab">Pull tab</span>
+            <span class="hidden-wave"></span>
+          </button>
+          <div class="button-row">
+            <button class="primary-button script-cta" type="button" id="listen-button">
+              Listen
+            </button>
+            <button class="secondary-button" type="button">Keep safe</button>
+            <button class="secondary-button" type="button" data-screen="record">
+              Send something back
+            </button>
+          </div>
+          <p class="parcel-status" id="listen-status">That was nice.</p>
+        </div>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
