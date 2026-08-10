@@ -16,11 +16,7 @@
     <main class="app-shell">
       <section class="hero-panel" aria-labelledby="app-title">
         <div class="brand-row">
-          <img
-            class="wordmark-image"
-            src="assets/postie-wordmark.png"
-            alt="Postie"
-          />
+          <img class="wordmark-image" src="assets/postie-wordmark.png" alt="Postie" />
           <p class="parcel-meta">Strawberry Mail</p>
         </div>
 
@@ -45,97 +41,92 @@
       </section>
 
       <section class="workspace" aria-label="Postie app">
-        <div class="screen is-active" id="screen-mailbox">
-          <div class="panel-heading">
-            <p class="parcel-meta">Good morning, June</p>
-            <h2 class="parcel-title" id="flow-title">
-              There is a berry important delivery.
-            </h2>
-            <p class="parcel-body" id="flow-copy">
-              Open it, wrap a reply, then pop it into the little digital post.
-            </p>
-          </div>
+        <div class="panel-heading">
+          <p class="parcel-meta">Special delivery from Sam</p>
+          <h2 class="parcel-title" id="flow-title">A little world, folded just for you.</h2>
+          <p class="parcel-body" id="flow-copy">Tap the parcel to see what Sam tucked inside.</p>
+        </div>
 
-          <div class="parcel-theater" aria-label="Animated parcel">
-            <svg
-              class="parcel-svg"
-              viewBox="0 0 520 360"
-              role="img"
-              aria-labelledby="parcel-svg-title parcel-svg-desc"
+        <div class="parcel-theater" id="parcel-theater">
+          <div class="parcel-scene" id="parcel-scene">
+            <div class="paper-flap paper-flap-top" aria-hidden="true">
+              <span class="paper-crease"></span>
+            </div>
+            <div class="paper-flap paper-flap-right" aria-hidden="true">
+              <span class="paper-crease"></span>
+            </div>
+            <div class="paper-flap paper-flap-bottom" aria-hidden="true">
+              <span class="paper-crease"></span>
+            </div>
+            <div class="paper-flap paper-flap-left" aria-hidden="true">
+              <span class="paper-crease"></span>
+            </div>
+
+            <div class="parcel-reveal" id="parcel-reveal" aria-hidden="true">
+              <svg
+                class="dream-landscape"
+                viewBox="0 0 400 260"
+                role="img"
+                aria-labelledby="dream-title dream-desc"
+                preserveAspectRatio="xMidYMid slice"
+              >
+                <title id="dream-title">A dream meadow at sunset</title>
+                <desc id="dream-desc">A flower-filled train opens onto a glowing dream landscape.</desc>
+                <defs>
+                  <clipPath id="dream-clip">
+                    <path id="dream-mask" d="M194 126 H206 V134 H194 Z" />
+                  </clipPath>
+                  <path id="mask-closed" d="M194 126 H206 V134 H194 Z" />
+                  <path id="mask-open" d="M16 16 Q16 4 28 4 H372 Q384 4 384 16 V244 Q384 256 372 256 H28 Q16 256 16 244 Z" />
+                </defs>
+                <image
+                  href="mood references/8a39c11b13e725e197139d8c31e06e8a.jpg"
+                  width="400"
+                  height="260"
+                  preserveAspectRatio="xMidYMid slice"
+                  clip-path="url(#dream-clip)"
+                />
+              </svg>
+
+              <div class="voice-note" id="voice-note">
+                <button class="play-button" id="play-button" type="button" aria-label="Play voice message">
+                  <span class="play-icon" aria-hidden="true"></span>
+                </button>
+                <div class="voice-copy">
+                  <strong>Sam, from the soft place</strong>
+                  <span id="voice-time">0:00 / 0:12</span>
+                </div>
+                <div class="waveform" id="waveform" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <i id="wave-progress"></i>
+                </div>
+              </div>
+            </div>
+
+            <button
+              class="parcel-lid paper-texture"
+              id="parcel-button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="parcel-reveal"
             >
-              <title id="parcel-svg-title">Animated Postie parcel</title>
-              <desc id="parcel-svg-desc">
-                A parcel opens into a message and folds back into a wrapped reply.
-              </desc>
-              <defs>
-                <path
-                  id="shape-closed"
-                  d="M105 105 C105 82 124 70 152 70 L368 70 C396 70 415 82 415 105 L415 245 C415 278 394 292 360 292 L160 292 C126 292 105 278 105 245 Z"
-                />
-                <path
-                  id="shape-open"
-                  d="M100 196 C119 150 146 115 178 94 C220 66 300 66 342 94 C374 115 401 150 420 196 L374 292 L146 292 Z"
-                />
-                <path
-                  id="shape-wrapped"
-                  d="M132 92 C153 78 367 78 388 92 L424 132 L388 286 C367 300 153 300 132 286 L96 132 Z"
-                />
-                <path
-                  id="shape-mailed"
-                  d="M188 124 C205 111 315 111 332 124 L372 166 L332 252 C315 265 205 265 188 252 L148 166 Z"
-                />
-              </defs>
-              <path
-                id="parcel-shape"
-                class="parcel-shape"
-                d="M105 105 C105 82 124 70 152 70 L368 70 C396 70 415 82 415 105 L415 245 C415 278 394 292 360 292 L160 292 C126 292 105 278 105 245 Z"
-              />
-              <path
-                id="parcel-flap"
-                class="parcel-flap"
-                d="M114 114 L260 214 L406 114"
-              />
-              <path
-                id="thread-wave"
-                class="thread-wave"
-                d="M150 224 C178 184 201 262 230 222 C260 180 286 262 318 220 C345 184 368 245 392 212"
-              />
-              <rect id="parcel-tape-svg" class="parcel-tape-svg" x="242" y="87" width="36" height="202" rx="10" />
-              <g id="parcel-label-svg" class="parcel-label-svg">
-                <rect x="176" y="148" width="168" height="58" rx="8" />
-                <text x="260" y="181" text-anchor="middle">Open when you miss me</text>
-              </g>
-              <g id="postal-stamp" class="postal-stamp">
-                <circle cx="370" cy="118" r="24" />
-                <text x="370" y="123" text-anchor="middle">XO</text>
-              </g>
-            </svg>
+              <span class="packing-tape" aria-hidden="true"></span>
+              <span class="address-label">
+                <span class="parcel-meta">For June</span>
+                <strong>Open when the sky feels far away</strong>
+                <small>From Sam, with one small berry brave thought</small>
+              </span>
+              <span class="postal-mark" aria-hidden="true">XO</span>
+            </button>
           </div>
+        </div>
 
-          <div class="timeline-meter" aria-hidden="true">
-            <span class="meter-step is-active">Receive</span>
-            <span class="meter-step">Open</span>
-            <span class="meter-step">Wrap</span>
-            <span class="meter-step">Send</span>
-          </div>
-
-          <div class="button-row">
-            <button class="primary-button script-cta" type="button" id="open-button">
-              Open parcel
-            </button>
-            <button class="primary-button script-cta" type="button" id="wrap-button">
-              Wrap reply
-            </button>
-            <button class="secondary-button" type="button" id="send-button">
-              Pop it in the post
-            </button>
-            <button class="secondary-button" type="button" id="reset-button">
-              Reset
-            </button>
-          </div>
-          <p class="parcel-status" id="flow-status">
-            Special delivery from Sam. Packed 12 minutes ago.
+        <div class="parcel-footer">
+          <p class="parcel-status" id="flow-status" aria-live="polite">
+            Paper parcel. Packed 12 minutes ago.
           </p>
+          <button class="fold-button" id="fold-button" type="button" hidden>Fold it closed</button>
         </div>
       </section>
     </main>

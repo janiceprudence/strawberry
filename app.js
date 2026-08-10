@@ -1,112 +1,138 @@
-const stageStatus = document.querySelector("#stage-status");
-const mailbox = document.querySelector("#mailbox");
-const openButton = document.querySelector("#open-button");
-const wrapButton = document.querySelector("#wrap-button");
-const sendButton = document.querySelector("#send-button");
-const resetButton = document.querySelector("#reset-button");
+const parcelButton = document.querySelector("#parcel-button");
+const foldButton = document.querySelector("#fold-button");
+const parcelReveal = document.querySelector("#parcel-reveal");
+const dreamMask = document.querySelector("#dream-mask");
+const voiceNote = document.querySelector("#voice-note");
+const playButton = document.querySelector("#play-button");
+const voiceTime = document.querySelector("#voice-time");
+const waveProgress = document.querySelector("#wave-progress");
 const flowTitle = document.querySelector("#flow-title");
 const flowCopy = document.querySelector("#flow-copy");
 const flowStatus = document.querySelector("#flow-status");
-const meterSteps = Array.from(document.querySelectorAll(".meter-step"));
-const parcelShape = document.querySelector("#parcel-shape");
-const parcelFlap = document.querySelector("#parcel-flap");
-const threadWave = document.querySelector("#thread-wave");
-const parcelTape = document.querySelector("#parcel-tape-svg");
-const parcelLabel = document.querySelector("#parcel-label-svg");
-const postalStamp = document.querySelector("#postal-stamp");
-
-gsap.registerPlugin(MorphSVGPlugin);
-gsap.set(parcelShape, { morphSVG: "#shape-closed" });
-gsap.set([parcelTape, parcelLabel, postalStamp], { autoAlpha: 0 });
-
-const content = {
-  receive: [
-    "There is a berry important delivery.",
-    "Open it, wrap a reply, then pop it into the little digital post.",
-    "Special delivery from Sam. Packed 12 minutes ago.",
-  ],
-  open: [
-    "Something soft from Sam.",
-    "The paper opens like a tiny window. One sleepy hello is tucked inside.",
-    "Played once. Saved with a tiny opened-again postmark.",
-  ],
-  wrap: [
-    "Wrap your reply.",
-    "Gingham paper, cream label, one little red thread of feeling.",
-    "Sealed and labeled: Open when you miss me.",
-  ],
-  send: [
-    "It is on its way.",
-    "The parcel shrinks into the digital mailbox and waits with the flag up.",
-    "Alex has a little something waiting.",
-  ],
+const stageStatus = document.querySelector("#stage-status");
+const parcelScene = document.querySelector("#parcel-scene");
+const flaps = {
+  top: document.querySelector(".paper-flap-top"),
+  right: document.querySelector(".paper-flap-right"),
+  bottom: document.querySelector(".paper-flap-bottom"),
+  left: document.querySelector(".paper-flap-left"),
 };
 
-function setStep(stepName) {
-  const stepNames = ["receive", "open", "wrap", "send"];
-  const activeIndex = stepNames.indexOf(stepName);
-  const [title, copy, status] = content[stepName];
+gsap.registerPlugin(MorphSVGPlugin);
+gsap.set(dreamMask, { morphSVG: "#mask-closed" });
+gsap.set([parcelReveal, voiceNote], { autoAlpha: 0 });
+gsap.set(Object.values(flaps), { autoAlpha: 0, scale: 0.82 });
 
-  flowTitle.textContent = title;
-  flowCopy.textContent = copy;
-  flowStatus.textContent = status;
-  stageStatus.textContent = status;
-  meterSteps.forEach((step, index) => {
-    step.classList.toggle("is-active", index <= activeIndex);
+let parcelOpen = false;
+let playing = false;
+let playbackTimeline;
+
+function setOpenCopy() {
+  flowTitle.textContent = "Sam sent you somewhere softer.";
+  flowCopy.textContent = "A sunset train, a field of flowers, and twelve seconds meant only for you.";
+  flowStatus.textContent = "The parcel is open. The little world is still warm.";
+  stageStatus.textContent = "June opened Sam's tiny weatherproof world.";
+}
+
+function setClosedCopy() {
+  flowTitle.textContent = "A little world, folded just for you.";
+  flowCopy.textContent = "Tap the parcel to see what Sam tucked inside.";
+  flowStatus.textContent = "Paper parcel. Packed 12 minutes ago.";
+  stageStatus.textContent = "There is something soft waiting in your mailbox.";
+}
+
+function openParcel() {
+  if (parcelOpen) return;
+  const lidLift = parcelScene.clientHeight * 0.67;
+  const flapReachY = parcelScene.clientHeight * 0.46;
+  const flapReachX = parcelScene.clientWidth * 0.33;
+  parcelOpen = true;
+  parcelButton.setAttribute("aria-expanded", "true");
+  parcelReveal.setAttribute("aria-hidden", "false");
+  foldButton.hidden = false;
+  setOpenCopy();
+
+  gsap.timeline({ defaults: { ease: "power3.inOut" } })
+    .to(parcelButton, {
+      duration: 0.8,
+      y: -lidLift,
+      rotateX: -12,
+      scale: 0.96,
+      transformOrigin: "50% 100%",
+    })
+    .to(parcelReveal, { duration: 0.18, autoAlpha: 1 }, "-=0.38")
+    .to(flaps.top, { duration: 0.64, autoAlpha: 1, y: -flapReachY, scale: 1, rotateX: -8 }, "-=0.26")
+    .to(flaps.right, { duration: 0.58, autoAlpha: 1, x: flapReachX, scale: 1, rotateY: 8 }, "-=0.48")
+    .to(flaps.bottom, { duration: 0.58, autoAlpha: 1, y: flapReachY, scale: 1, rotateX: 8 }, "-=0.48")
+    .to(flaps.left, { duration: 0.58, autoAlpha: 1, x: -flapReachX, scale: 1, rotateY: -8 }, "-=0.48")
+    .to(dreamMask, { duration: 1.05, morphSVG: "#mask-open", ease: "expo.inOut" }, "-=0.26")
+    .fromTo(".dream-landscape image", { scale: 1.16 }, { duration: 1.2, scale: 1, transformOrigin: "50% 50%" }, "<")
+    .to(voiceNote, { duration: 0.5, autoAlpha: 1, y: 0 }, "-=0.35")
+    .fromTo(".waveform span", { scaleY: 0.25 }, { duration: 0.4, scaleY: 1, stagger: 0.035 }, "-=0.28")
+    .call(() => playButton.focus());
+}
+
+function stopPlayback() {
+  playbackTimeline?.kill();
+  playing = false;
+  playButton.classList.remove("is-playing");
+  playButton.setAttribute("aria-label", "Play voice message");
+  voiceTime.textContent = "0:00 / 0:12";
+  gsap.set(waveProgress, { scaleX: 0 });
+}
+
+function closeParcel() {
+  if (!parcelOpen) return;
+  stopPlayback();
+  parcelOpen = false;
+  parcelButton.setAttribute("aria-expanded", "false");
+  foldButton.hidden = true;
+  setClosedCopy();
+
+  gsap.timeline({ defaults: { ease: "power3.inOut" } })
+    .to(voiceNote, { duration: 0.24, autoAlpha: 0 })
+    .to(dreamMask, { duration: 0.72, morphSVG: "#mask-closed" }, "-=0.08")
+    .to(flaps.left, { duration: 0.46, x: 0, scale: 0.82, autoAlpha: 0 }, "-=0.18")
+    .to(flaps.bottom, { duration: 0.46, y: 0, scale: 0.82, autoAlpha: 0 }, "-=0.38")
+    .to(flaps.right, { duration: 0.46, x: 0, scale: 0.82, autoAlpha: 0 }, "-=0.38")
+    .to(flaps.top, { duration: 0.46, y: 0, scale: 0.82, autoAlpha: 0 }, "-=0.38")
+    .to(parcelReveal, { duration: 0.16, autoAlpha: 0 }, "-=0.2")
+    .to(parcelButton, { duration: 0.7, y: 0, rotateX: 0, scale: 1 }, "-=0.12")
+    .call(() => {
+      parcelReveal.setAttribute("aria-hidden", "true");
+      parcelButton.focus();
+    });
+}
+
+function togglePlayback() {
+  if (playing) {
+    stopPlayback();
+    return;
+  }
+
+  playing = true;
+  playButton.classList.add("is-playing");
+  playButton.setAttribute("aria-label", "Pause voice message");
+  playbackTimeline = gsap.timeline({
+    onUpdate() {
+      const elapsed = Math.min(12, Math.floor(this.progress() * 12));
+      voiceTime.textContent = `0:${String(elapsed).padStart(2, "0")} / 0:12`;
+    },
+    onComplete() {
+      stopPlayback();
+    },
   });
+  playbackTimeline.fromTo(waveProgress, { scaleX: 0 }, { duration: 12, scaleX: 1, ease: "none" });
 }
 
-function makeTimeline(stepName) {
-  setStep(stepName);
-  return gsap.timeline({ defaults: { ease: "power2.inOut" } });
+parcelButton.addEventListener("click", openParcel);
+foldButton.addEventListener("click", closeParcel);
+playButton.addEventListener("click", togglePlayback);
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && parcelOpen) closeParcel();
+});
+
+if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  gsap.globalTimeline.timeScale(100);
 }
-
-openButton.addEventListener("click", () => {
-  makeTimeline("open")
-    .to(parcelShape, { duration: 0.95, morphSVG: "#shape-open" })
-    .to(parcelFlap, { duration: 0.65, y: -34, rotateX: 28, transformOrigin: "50% 100%" }, "<")
-    .to(threadWave, { duration: 0.45, autoAlpha: 1, strokeDashoffset: 0 }, "-=0.15")
-    .fromTo(threadWave, { strokeDasharray: "1 18" }, { duration: 0.8, strokeDasharray: "18 10" }, "<");
-});
-
-wrapButton.addEventListener("click", () => {
-  makeTimeline("wrap")
-    .to(threadWave, { duration: 0.25, autoAlpha: 0 })
-    .to(parcelFlap, { duration: 0.45, y: 0, rotateX: 0 }, "<")
-    .to(parcelShape, { duration: 0.9, morphSVG: "#shape-wrapped" }, "<")
-    .to(parcelTape, { duration: 0.45, autoAlpha: 1, scaleY: 1.04, transformOrigin: "50% 50%" })
-    .to(parcelLabel, { duration: 0.35, autoAlpha: 1, y: -4 }, "-=0.18")
-    .to(postalStamp, { duration: 0.3, autoAlpha: 1, scale: 1.08, transformOrigin: "50% 50%" }, "-=0.05")
-    .to(postalStamp, { duration: 0.18, scale: 1 });
-});
-
-sendButton.addEventListener("click", () => {
-  makeTimeline("send")
-    .to([parcelShape, parcelFlap, parcelTape, parcelLabel, postalStamp], {
-      duration: 0.75,
-      scale: 0.62,
-      x: 76,
-      y: -18,
-      transformOrigin: "50% 50%",
-    })
-    .to(parcelShape, { duration: 0.65, morphSVG: "#shape-mailed" }, "<")
-    .to(".mailbox-flag", { duration: 0.5, rotate: -52, transformOrigin: "50% 100%" }, "-=0.35")
-    .to(".mailbox-screen", { duration: 0.3, background: "linear-gradient(180deg, #c94a4a, #762e35)" }, "<")
-    .call(() => mailbox.classList.add("has-mail"));
-});
-
-resetButton.addEventListener("click", () => {
-  setStep("receive");
-  mailbox.classList.remove("has-mail");
-  gsap.timeline({ defaults: { duration: 0.45, ease: "power2.out" } })
-    .to([parcelShape, parcelFlap, parcelTape, parcelLabel, postalStamp], {
-      x: 0,
-      y: 0,
-      scale: 1,
-      autoAlpha: 1,
-      transformOrigin: "50% 50%",
-    })
-    .to(parcelShape, { morphSVG: "#shape-closed" }, "<")
-    .to([parcelTape, parcelLabel, postalStamp, threadWave], { autoAlpha: 0 }, "<")
-    .to(".mailbox-flag", { rotate: -14 }, "<");
-});
