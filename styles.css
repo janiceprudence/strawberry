@@ -215,14 +215,6 @@ button:focus-visible {
   padding: 1rem;
 }
 
-.flow-tabs {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0.5rem;
-  padding-bottom: 1rem;
-}
-
-.tab,
 .secondary-button,
 .wrap-choice {
   min-height: 2.75rem;
@@ -233,14 +225,12 @@ button:focus-visible {
   cursor: pointer;
 }
 
-.tab.is-active,
 .wrap-choice.is-selected {
   color: white;
   background: var(--cherry);
 }
 
 .screen {
-  display: none;
   flex: 1;
   padding: 1.5rem;
   border-radius: 8px;
@@ -251,6 +241,101 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+}
+
+.parcel-theater {
+  display: grid;
+  place-items: center;
+  min-height: 24rem;
+  overflow: hidden;
+  border: 1px solid rgb(118 46 53 / 16%);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 18% 18%, rgb(255 255 255 / 78%) 0 8%, transparent 9%),
+    linear-gradient(180deg, rgb(169 221 255 / 72%), rgb(245 196 189 / 44%) 58%, rgb(255 248 232 / 72%));
+}
+
+.parcel-svg {
+  width: min(34rem, 100%);
+  height: auto;
+  overflow: visible;
+}
+
+.parcel-shape {
+  fill: rgb(255 248 232 / 96%);
+  stroke: var(--cherry);
+  stroke-width: 4;
+  filter: drop-shadow(0 18px 22px rgb(93 39 40 / 18%));
+}
+
+.parcel-flap,
+.thread-wave {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.parcel-flap {
+  stroke: rgb(118 46 53 / 44%);
+  stroke-width: 3;
+}
+
+.thread-wave {
+  opacity: 0;
+  stroke: var(--strawberry);
+  stroke-width: 7;
+}
+
+.parcel-tape-svg {
+  opacity: 0;
+  fill: rgb(255 248 232 / 66%);
+  stroke: rgb(118 46 53 / 16%);
+}
+
+.parcel-label-svg {
+  opacity: 0;
+}
+
+.parcel-label-svg rect {
+  fill: rgb(255 248 232 / 96%);
+  stroke: rgb(118 46 53 / 20%);
+}
+
+.parcel-label-svg text,
+.postal-stamp text {
+  fill: var(--cherry);
+  font-family: var(--font-parcel);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.postal-stamp {
+  opacity: 0;
+}
+
+.postal-stamp circle {
+  fill: rgb(245 196 189 / 84%);
+  stroke: var(--cherry);
+  stroke-dasharray: 4 4;
+  stroke-width: 2;
+}
+
+.timeline-meter {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.meter-step {
+  min-height: 0.5rem;
+  overflow: hidden;
+  color: transparent;
+  border-radius: 999px;
+  background: rgb(118 46 53 / 16%);
+}
+
+.meter-step.is-active {
+  background: var(--strawberry);
 }
 
 .panel-heading {
@@ -463,10 +548,6 @@ button:focus-visible {
 
   .sky-window {
     min-height: 20rem;
-  }
-
-  .flow-tabs {
-    grid-template-columns: repeat(3, 1fr);
   }
 
   .parcel-card {

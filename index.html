@@ -45,133 +45,102 @@
       </section>
 
       <section class="workspace" aria-label="Postie app">
-        <nav class="flow-tabs" aria-label="Postie flow">
-          <button class="tab is-active" type="button" data-screen="mailbox">
-            Mailbox
-          </button>
-          <button class="tab" type="button" data-screen="record">Record</button>
-          <button class="tab" type="button" data-screen="wrap">Wrap</button>
-          <button class="tab" type="button" data-screen="send">Send</button>
-          <button class="tab" type="button" data-screen="open">Open</button>
-        </nav>
-
         <div class="screen is-active" id="screen-mailbox">
           <div class="panel-heading">
             <p class="parcel-meta">Good morning, June</p>
-            <h2 class="parcel-title">There is a berry important delivery.</h2>
+            <h2 class="parcel-title" id="flow-title">
+              There is a berry important delivery.
+            </h2>
+            <p class="parcel-body" id="flow-copy">
+              Open it, wrap a reply, then pop it into the little digital post.
+            </p>
           </div>
-          <div class="parcel-list">
-            <article class="parcel-card">
-              <span class="fruit-sticker">S</span>
-              <div>
-                <p class="parcel-meta">Posted 8:42 AM</p>
-                <h3>Something from Sam</h3>
-                <p>Contents: one sleepy hello</p>
-              </div>
-              <button class="script-button" type="button" data-screen="open">
-                Open parcel
-              </button>
-            </article>
-            <article class="parcel-card muted">
-              <span class="fruit-sticker green">A</span>
-              <div>
-                <p class="parcel-meta">Keepsake Drawer</p>
-                <h3>Saved for later</h3>
-                <p>Opened again yesterday with a tiny postmark.</p>
-              </div>
-              <button class="secondary-button" type="button">Keep safe</button>
-            </article>
-          </div>
-          <button class="primary-button script-cta" type="button" data-screen="record">
-            Pack a voice note
-          </button>
-        </div>
 
-        <div class="screen" id="screen-record">
-          <div class="panel-heading">
-            <p class="parcel-meta">Recording room</p>
-            <h2 class="parcel-title">What would you like to send?</h2>
-            <p class="parcel-body">Hold the ribbon and say the small true thing.</p>
+          <div class="parcel-theater" aria-label="Animated parcel">
+            <svg
+              class="parcel-svg"
+              viewBox="0 0 520 360"
+              role="img"
+              aria-labelledby="parcel-svg-title parcel-svg-desc"
+            >
+              <title id="parcel-svg-title">Animated Postie parcel</title>
+              <desc id="parcel-svg-desc">
+                A parcel opens into a message and folds back into a wrapped reply.
+              </desc>
+              <defs>
+                <path
+                  id="shape-closed"
+                  d="M105 105 C105 82 124 70 152 70 L368 70 C396 70 415 82 415 105 L415 245 C415 278 394 292 360 292 L160 292 C126 292 105 278 105 245 Z"
+                />
+                <path
+                  id="shape-open"
+                  d="M100 196 C119 150 146 115 178 94 C220 66 300 66 342 94 C374 115 401 150 420 196 L374 292 L146 292 Z"
+                />
+                <path
+                  id="shape-wrapped"
+                  d="M132 92 C153 78 367 78 388 92 L424 132 L388 286 C367 300 153 300 132 286 L96 132 Z"
+                />
+                <path
+                  id="shape-mailed"
+                  d="M188 124 C205 111 315 111 332 124 L372 166 L332 252 C315 265 205 265 188 252 L148 166 Z"
+                />
+              </defs>
+              <path
+                id="parcel-shape"
+                class="parcel-shape"
+                d="M105 105 C105 82 124 70 152 70 L368 70 C396 70 415 82 415 105 L415 245 C415 278 394 292 360 292 L160 292 C126 292 105 278 105 245 Z"
+              />
+              <path
+                id="parcel-flap"
+                class="parcel-flap"
+                d="M114 114 L260 214 L406 114"
+              />
+              <path
+                id="thread-wave"
+                class="thread-wave"
+                d="M150 224 C178 184 201 262 230 222 C260 180 286 262 318 220 C345 184 368 245 392 212"
+              />
+              <rect id="parcel-tape-svg" class="parcel-tape-svg" x="242" y="87" width="36" height="202" rx="10" />
+              <g id="parcel-label-svg" class="parcel-label-svg">
+                <rect x="176" y="148" width="168" height="58" rx="8" />
+                <text x="260" y="181" text-anchor="middle">Open when you miss me</text>
+              </g>
+              <g id="postal-stamp" class="postal-stamp">
+                <circle cx="370" cy="118" r="24" />
+                <text x="370" y="123" text-anchor="middle">XO</text>
+              </g>
+            </svg>
           </div>
-          <div class="wave-label" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span>
+
+          <div class="timeline-meter" aria-hidden="true">
+            <span class="meter-step is-active">Receive</span>
+            <span class="meter-step">Open</span>
+            <span class="meter-step">Wrap</span>
+            <span class="meter-step">Send</span>
           </div>
-          <p class="parcel-status" id="record-status">I am listening. Take your time.</p>
+
           <div class="button-row">
-            <button class="primary-button script-cta" type="button" id="record-button">
-              Hold to record
+            <button class="primary-button script-cta" type="button" id="open-button">
+              Open parcel
             </button>
-            <button class="secondary-button" type="button" data-screen="wrap">
-              That's the one
+            <button class="primary-button script-cta" type="button" id="wrap-button">
+              Wrap reply
             </button>
-            <button class="secondary-button" type="button">Try again</button>
-          </div>
-        </div>
-
-        <div class="screen" id="screen-wrap">
-          <div class="panel-heading">
-            <p class="parcel-meta">Wrapping table</p>
-            <h2 class="parcel-title">Wrap your message</h2>
-          </div>
-          <div class="parcel-preview" id="parcel-preview">
-            <span class="parcel-tape"></span>
-            <span class="parcel-label">Open when you miss me</span>
-          </div>
-          <div class="wrap-options" role="group" aria-label="Wrapping paper">
-            <button class="wrap-choice is-selected" type="button" data-wrap="gingham">
-              Gingham paper
+            <button class="secondary-button" type="button" id="send-button">
+              Pop it in the post
             </button>
-            <button class="wrap-choice" type="button" data-wrap="strawberry">
-              Strawberry paper
-            </button>
-            <button class="wrap-choice" type="button" data-wrap="brown">
-              Brown paper and string
-            </button>
-            <button class="wrap-choice" type="button" data-wrap="midnight">
-              Secret midnight wrapping
+            <button class="secondary-button" type="button" id="reset-button">
+              Reset
             </button>
           </div>
-          <button class="primary-button script-cta" type="button" data-screen="send">
-            Seal the parcel
-          </button>
-        </div>
-
-        <div class="screen" id="screen-send">
-          <div class="address-label">
-            <p class="parcel-meta">Deliver to</p>
-            <h2 class="parcel-title">Alex</h2>
-            <p>From June. Contents classified, probably sweet.</p>
-          </div>
-          <button class="primary-button script-cta" type="button" id="send-button">
-            Pop it in the post
-          </button>
-          <p class="parcel-status" id="send-status">
-            Waiting by the little red flag.
+          <p class="parcel-status" id="flow-status">
+            Special delivery from Sam. Packed 12 minutes ago.
           </p>
-        </div>
-
-        <div class="screen" id="screen-open">
-          <div class="panel-heading">
-            <p class="parcel-meta">Packed 12 minutes ago</p>
-            <h2 class="parcel-title">Special delivery from June</h2>
-          </div>
-          <button class="open-parcel" type="button" id="open-parcel">
-            <span class="pull-tab">Pull tab</span>
-            <span class="hidden-wave"></span>
-          </button>
-          <div class="button-row">
-            <button class="primary-button script-cta" type="button" id="listen-button">
-              Listen
-            </button>
-            <button class="secondary-button" type="button">Keep safe</button>
-            <button class="secondary-button" type="button" data-screen="record">
-              Send something back
-            </button>
-          </div>
-          <p class="parcel-status" id="listen-status">That was nice.</p>
         </div>
       </section>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/MorphSVGPlugin.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
