@@ -11,6 +11,9 @@ const flowCopy = document.querySelector("#flow-copy");
 const flowStatus = document.querySelector("#flow-status");
 const stageStatus = document.querySelector("#stage-status");
 const parcelScene = document.querySelector("#parcel-scene");
+const mailbox = document.querySelector("#mailbox");
+const clouds = document.querySelectorAll(".cloud");
+const dreamGrid = document.querySelector(".dream-grid");
 const flaps = {
   top: document.querySelector(".paper-flap-top"),
   right: document.querySelector(".paper-flap-right"),
@@ -26,6 +29,55 @@ gsap.set(Object.values(flaps), { autoAlpha: 0, scale: 0.82 });
 let parcelOpen = false;
 let playing = false;
 let playbackTimeline;
+let parcelFloatTween;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function startParcelFloat() {
+  if (prefersReducedMotion || parcelOpen) return;
+  parcelFloatTween = gsap.to(parcelButton, {
+    y: -11,
+    rotate: 0.35,
+    duration: 1.9,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut",
+  });
+}
+
+function stopParcelFloat() {
+  parcelFloatTween?.kill();
+  parcelFloatTween = null;
+  gsap.set(parcelButton, { y: 0, rotate: 0 });
+}
+
+function startAmbientMotion() {
+  if (prefersReducedMotion) return;
+  startParcelFloat();
+  gsap.to(mailbox, {
+    y: -9,
+    rotate: -0.6,
+    duration: 2.8,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut",
+  });
+  gsap.to(clouds, {
+    x: (index) => index === 0 ? 18 : -15,
+    duration: 6.5,
+    stagger: 1.2,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut",
+  });
+  gsap.to(dreamGrid, {
+    y: 8,
+    rotateZ: 11,
+    duration: 5.2,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut",
+  });
+}
 
 function setOpenCopy() {
   flowTitle.textContent = "Sam sent you somewhere softer.";
@@ -43,6 +95,7 @@ function setClosedCopy() {
 
 function openParcel() {
   if (parcelOpen) return;
+  stopParcelFloat();
   const lidLift = parcelScene.clientHeight * 0.67;
   const flapReachY = parcelScene.clientHeight * 0.46;
   const flapReachX = parcelScene.clientWidth * 0.33;
@@ -101,6 +154,7 @@ function closeParcel() {
     .call(() => {
       parcelReveal.setAttribute("aria-hidden", "true");
       parcelButton.focus();
+      startParcelFloat();
     });
 }
 
@@ -133,6 +187,8 @@ window.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && parcelOpen) closeParcel();
 });
 
-if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+if (prefersReducedMotion) {
   gsap.globalTimeline.timeScale(100);
+} else {
+  startAmbientMotion();
 }
